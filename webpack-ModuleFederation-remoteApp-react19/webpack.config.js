@@ -33,14 +33,14 @@ module.exports = {
       template: './src/index.html', // 模板文件路径
     }),
     new ModuleFederationPlugin({
-      name: 'remoteApp', // 模块名称
-      filename: 'remoteEntry.js', // 远程应用的打包后的js文件（一个js文件）
+      name: 'remoteApp', // 向外暴露的模块名称
+      filename: 'remoteEntry.js', // 额外打包出的文件,专门服务于宿主应用的一个js文件
       exposes: {
-        './MyComponent': './src/MyComponent', // 远程应用开发时的文件路径
+        './MyComponent': './src/MyComponent', // 像宿主应用暴露的组件
       },
       shared: {
         react: {
-          eager: true,
+          eager: true, // 宿主应用加载时立即记载
           singleton: true, // 确保 React 实例是单例
           requiredVersion: packageJson.dependencies.react, // 使用项目中的 React 版本
         },

@@ -9,6 +9,12 @@ import VueContainer from './VueContainer';
 import Button from './Button';
 
 const App = () => {
+  useEffect(() => {
+    window.localStorage.setItem('hostApp_token', '这是hostApp_token');
+
+    return () => {};
+  }, []);
+
   return (
     <div>
       <Suspense fallback={<div>Loading...</div>}>

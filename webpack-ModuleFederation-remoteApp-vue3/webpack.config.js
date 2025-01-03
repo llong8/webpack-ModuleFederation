@@ -35,18 +35,18 @@ module.exports = {
       chunks: ['bundle'],
     }),
     new ModuleFederationPlugin({
-      name: 'remoteAppVue', // 模块名称
-      filename: 'remoteEntry.js', // 远程应用的打包后的js文件（一个js文件）
+      name: 'remoteAppVue', // 向外暴露的模块名称
+      filename: 'remoteEntry.js', // 额外打包出的文件,专门服务于宿主应用的一个js文件
       exposes: {
-        './vueApp': './src/App.vue', // 远程应用开发时的文件路径
-        './vue': 'vue', // 远程应用开发时的文件路径
+        './vueApp': './src/App.vue',  // 向宿主应用暴露的组件
+        './vue': 'vue', // 把vue向宿主应用暴露,shared中的vue会共享给宿主应用
       },
       shared: {
         vue: {
           // 远程应用会确保它自己的 vue 版本被共享到宿主应用中。
-          eager: true,
-          singleton: true, // 确保 React 实例是单例
-          requiredVersion: deps.vue, // 使用项目中的 React 版本
+          eager: true, // 宿主应用加载时立即记载
+          singleton: true, // 确保 vue 实例是单例
+          requiredVersion: deps.vue, // 要求版本匹配
         },
       },
     }),
